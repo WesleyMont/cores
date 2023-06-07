@@ -6,26 +6,29 @@ import Novascores from "../../components/novascores";
 import Adicionarcor from "../../components/adicionarcor";
 export default function Lista(navigation){
     
-    const[lista, setLista] = useState();
+    const[lista, setLista] = useState([
+        {texto: "rosa", key: '1'},
+        {texto: "branco", key: '2'}
+    ]);
     //delete
     const deletarItem = (key) => {
-        Axios.delete(`http://192.168.0.104:3001/item/${key}`,
+        Axios.delete(`http://192.168.0.101:3001/item/${key}`,
         )
     }
 
 
     //read
-  useEffect(() => {
-    Axios.get("http://192.168.0.104:3001/itens").then(
+    useEffect(() => {
+    Axios.get("http://192.168.0.101:3001/itens").then(
         (response) => {
             setLista(response.data)
         }
     )
   },[lista])
 
-  //create
+    //create
     const submeterInfomacao = (texto) => {
-        Axios.post("http://192.168.0.104:3001/item", {item:texto})       
+        Axios.post("http://192.168.0.101:3001/item", {item:texto})       
     }
     const apertarItem = (key) => {
         setLista(
@@ -44,7 +47,9 @@ export default function Lista(navigation){
                     <FlatList
                     data={lista}
                     renderItem={({item}) => (
+                        <Novascores props={item} funcao={apertarItem}/>,
                         <Novascores props={item} funcao={deletarItem}/>
+                        
                     )}
                     />
                 </View>

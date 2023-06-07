@@ -12,11 +12,19 @@ const db = mysql.createPool({
     password: "password",
     database:"bditens",
     port:3306,
+    
 })
+/*teste de banco
+app.get("/", (req,res) => {
+    let SQL = "INSERT INTO listaitens ( itens ) VALUES ('rosa')";
+    db.query(SQL, (err, result) =>{
+        console.log(err);
+    })
+})*/
 
 
 //delete
-app.delete("/item/:id",(req, res) => {
+app.delete("/item/:id", (req, res) =>{
     const {id} = req.params;
     console.log("Informação: ", id)
     let SQL = " DELETE FROM listaitens WHERE (`id` = ?)";
@@ -36,10 +44,10 @@ app.get("/itens", (req, res) => {
 })
 
 //create
-app.post("/item", (req, res) => {
+app.post("/item", (req,res) =>{
     const { item } = req.body;
-    let SQL = "INSERT INTO listaitens (itens) values (?) ";
-    db.query(SQL, item, (err, result) => {
+    let SQL = " INSERT INTO listaitens (itens) VALUES (?)";
+    db.query(SQL, item, (err, result) =>{
         console.log(err);
     })
 });
